@@ -3,8 +3,11 @@ import PostStory from "../pages/PostStory/PostStory";
 import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import StoryDetailPage from "../pages/StoryDetailPage/StoryDetailPage";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+import StoryManager from "../pages/StoryManager/StoryManager";
+import AdminPage from "../pages/AdminPage/AdminPage";
 
 export const routes = [
     {
@@ -31,6 +34,20 @@ export const routes = [
         path: '/detail-story-test',
         page: StoryDetailPage,
         isShowHeader: true,
+    },
+    {
+        path: '/trang-ca-nhan',
+        page: ProfilePage,
+        isShowHeader: true,
+    },
+    {
+        path: '/quan-ly-truyen',
+        page: StoryManager,
+        isShowHeader: true,
+    },
+    {
+        path: '/system/admin',
+        page: AdminPage,
     },
     {
         path: '*',

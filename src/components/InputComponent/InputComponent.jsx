@@ -7,10 +7,10 @@ InputComponent.propTypes = {
 };
 
 function InputComponent(props) {
-    const { placeholder, size, style, ...rests } = props;
+    const { placeholder, size, style, value, onChange } = props;
     return (
         <div>
-            <Input placeholder={placeholder} size={size} style={style} />
+            <Input placeholder={placeholder} size={size} style={style} value={value} onChange={onChange}/>
         </div>
     );
 }

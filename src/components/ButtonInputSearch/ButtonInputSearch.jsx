@@ -12,9 +12,9 @@ ButtonInputSearch.propTypes = {
 function ButtonInputSearch(props) {
     const { size, placeholder, textButton } = props;
     return (
-        <div style={{ display: 'flex' }}>
-            <InputComponent placeholder={placeholder} size="large" style={{ borderRadius: "0px", }} />
-            <Button type="link" size="large" icon={<SearchOutlined />} style={{ backgroundColor: '#fff', borderRadius: '0px', color: '#0E3746', padding: "0px 5px" }}>{textButton}</Button>
+        <div style={{ display: 'flex', margin: '5px' }}>
+            <InputComponent placeholder={placeholder} size="middle" style={{ borderRadius: "0px", }} />
+            <Button type="link" size="middle" icon={<SearchOutlined />} style={{ backgroundColor: '#fff', borderRadius: '0px', color: '#0E3746', padding: "0px 5px" }}>{textButton}</Button>
         </div>
     );
 }

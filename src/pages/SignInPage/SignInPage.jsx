@@ -9,11 +9,16 @@ import * as UserService from '../../services/UserService';
 import { useMutationHooks } from '../../hooks/useMutationHook';
 import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message';
+import { jwtDecode } from "jwt-decode";
+import { useDispatch } from 'react-redux';
+import { updateUser } from '../../redux/slides/userSlide'
+
 
 
 function SignInPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
 
     const navigate = useNavigate();
 
@@ -21,17 +26,37 @@ function SignInPage() {
         data => UserService.loginUser(data)
     )
     const { data, isPending, isSuccess } = mutation;
+    console.log('mutation: ', mutation);
+
 
     useEffect(() => {
         if (isSuccess) {
-            // message.success();
-            // handleIconBackHome();
             console.log('data: ' + data);
-            localStorage.setItem('access_token', data?.access_token);
+            localStorage.setItem('access_token', JSON.stringify(data?.access_token));
+            if (data?.access_token) {
+                const decoded = jwtDecode(data?.access_token)
+                console.log('decoded', decoded);
+                if (decoded?.id) {
+                    handleGetDetailUser(decoded.id, data?.access_token);
+                }
+            }
+            if (data?.status === 'ERR') {
+                message.error(data?.message);
+            }
+            if (mutation.data.status === 'OK') {
+                handleIconBackHome();
+                message.success('Đăng nhập thành công');
+            }
         }
-    }, [isSuccess])
+    }, [isSuccess]);
 
-    console.log('mutation', mutation);
+    const handleGetDetailUser = async (id, token) => {
+        const res = await UserService.getDetailUser(id, token);
+        dispatch(updateUser({ ...res?.data, access_token: token }));
+        console.log('res: ', res);
+    }
+
+    // console.log('mutation', mutation);
 
 
     const handleButtonSignUp = () => {
@@ -57,7 +82,6 @@ function SignInPage() {
                     <a onClick={handleIconBackHome}><LeftOutlined /></a>
                     <h2>Xin chào,</h2>
                     <h3>Đăng nhập hoặc Tạo tài khoản</h3>
-                    {data?.status === 'ERR' && <span style={{ color: 'red' }}>{data?.message}</span>}
                     <InputForm value={email} onChange={handleOnchangeEmail} placeholder="Email" style={{ marginLeft: '20px', marginBottom: '20px', width: '90%' }} />
 
                     <InputForm value={password} onChange={handleOnchangePassword} placeholder="Mật khẩu" type="password" style={{ marginLeft: '20px', marginBottom: '20px', width: '90%' }} />

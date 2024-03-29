@@ -1,14 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import StoryComponent from '../../components/StoryComponent/StoryComponents';
 import NewStoryComponent from '../../components/StoryComponent/NewStoryComponent';
 import NavbarCategoryComponent from '../../components/NavbarCategoryComponent/NavbarCategoryComponent';
 import BreadCrumbComponent from '../../components/BreadCrumbComponent/BreadCrumbComponent';
 import { Col, Row } from 'antd';
-HomePage.propTypes = {
-
-};
-
 
 
 function HomePage(props) {
