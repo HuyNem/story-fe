@@ -29,8 +29,16 @@ function SignUpPage(props) {
 
     useEffect(() => {
         if (isSuccess) {
-            message.success();
-            handleButtonSignIn();
+            if (data?.status === 'OK') {
+                message.success('Đăng ký tài khoản thành công')
+                handleButtonSignIn();
+            } else if (data?.status === 'ERR_EMAIL_AR') {
+                message.warning('Email đã được đăng ký');
+            } else if (data?.status === 'ERR_EMAIL') {
+                message.error('Email không hợp lệ')
+            } else if (data?.status === 'ERR_CONFIRM_PASSWORD') {
+                message.error('Mật khẩu nhập lại không đúng');
+            }
         } else if (isError) {
             message.error();
         }
@@ -65,11 +73,11 @@ function SignUpPage(props) {
                     <h3>Đăng nhập hoặc Tạo tài khoản</h3>
                     <InputForm value={email} onChange={handleOnchangeEmail} placeholder="Email" style={{ marginLeft: '20px', marginBottom: '20px', width: '90%' }} />
 
-                    <InputForm value={password} onChange={handleOnchangePassword} placeholder="Mật khẩu" style={{ marginLeft: '20px', marginBottom: '20px', width: '90%' }} />
+                    <InputForm type="password" value={password} onChange={handleOnchangePassword} placeholder="Mật khẩu" style={{ marginLeft: '20px', marginBottom: '20px', width: '90%' }} />
 
-                    <InputForm value={confirmPassword} onChange={handleOnchangeConfirmPassword} placeholder="Nhập lại mật khẩu" style={{ marginLeft: '20px', marginBottom: '20px', width: '90%' }} />
+                    <InputForm type="password" value={confirmPassword} onChange={handleOnchangeConfirmPassword} placeholder="Nhập lại mật khẩu" style={{ marginLeft: '20px', marginBottom: '20px', width: '90%' }} />
 
-                    <ButtonComponent onClick={handleSignUp} size="middle" textButton="Đăng ký" style={{ backgroundColor: "#0E3746", color: "#fff", marginLeft: '20px', width: '90%' }} />
+                    <ButtonComponent disabled={!email.length || !password.length || !confirmPassword.length} onClick={handleSignUp} size="middle" textButton="Đăng ký" style={{ backgroundColor: "#0E3746", color: "#fff", marginLeft: '20px', width: '90%' }} />
 
                     <p style={{ marginLeft: '20px' }}>Bạn đã có tài khoản? <a><span onClick={handleButtonSignIn} style={{ cursor: 'pointer', color: 'blue' }}>Đăng nhập</span></a></p>
                 </WrapperContainer>

@@ -7,6 +7,7 @@ export const WrapperStory = styled.div`
   margin-top:10px;
 `
 
+//story component
 export const Story = styled.div`
   margin-bottom: 15px;
   padding-bottom: 10px;
@@ -37,12 +38,81 @@ export const WrapperNewStory = styled.div`
   border: 1px solid #F4F2EC;
   background-color: #F4F2EC;
   max-width: 650px;
+  margin-left: 50px;
 
   h3 {
     color: #0E3746;
   }
 `
 
+
+
+
+//css cho truyện theo thể loại
+export const WrapperTitle = styled.h3`
+  font-size: 16px;
+  margin-left: 10px;
+`
+export const WrapperStoryByCategory = styled.div`
+    border: 1px solid #F4F2EC;
+    background-color: #F4F2EC;
+    max-width: 100;
+    height: 600px;
+    margin-top: 50px;
+
+    h3 {
+      color: #0E3746;
+    }
+
+`
+
+//
+export const WrapperStoryCategory = styled.div`
+    display: flex;
+    height: 80px;
+    margin: 2px 10px;
+
+    background-color: #F4F2EC;
+    border: 1px dashed #666;
+
+    h5:hover {
+      text-decoration: underline;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+`
+
+export const WrapperStoryCategoryLeft = styled.div`
+  display: flex;
+  align-items: center;
+
+    margin-left: 5px;
+
+    img {
+      width: 50px;
+      display: flex;
+    }
+`
+
+export const WrapperStoryCategoryRight = styled.div`
+
+  h5 {
+    margin: 0px;
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+
+  p {
+    font-size: 12px;
+    margin-top: 10px;
+    margin-left: 5px;
+  }
+`
+
+
+//pagination
 export const WrapperPagination = styled.div`
 // position: relative;
 //   left: 190px;

@@ -55,9 +55,6 @@ function HeaderComponent(props) {
     const handleOpenChange = (newOpen) => {
         setOpen(newOpen);
     };
-    const handleProfile = async () => {
-        navigate('/trang-ca-nhan');
-    }
     const handleStoryManager = async () => {
         navigate('/quan-ly-truyen');
     }
@@ -83,7 +80,7 @@ function HeaderComponent(props) {
 
     const content = (
         <div onClick={hide}>
-            <WrappeContentPopup className='ContentPopup' onClick={handleProfile}><HeartFilled /> Trang cá nhân </WrappeContentPopup>
+            <WrappeContentPopup className='ContentPopup' onClick={() => navigate('/trang-ca-nhan')}><HeartFilled /> Trang cá nhân </WrappeContentPopup>
             <WrappeContentPopup className='ContentPopup' onClick={handleStoryManager}><MenuOutlined /> Quản lý truyện </WrappeContentPopup>
             {user?.isAdmin && (
                 <WrappeContentPopup className='ContentPopup' onClick={() => navigate('/system/admin')}><RiUserSettingsLine /> Quản lý hệ thống </WrappeContentPopup>

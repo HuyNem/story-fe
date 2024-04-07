@@ -1,17 +1,34 @@
 import styled from "styled-components";
 import { Upload } from 'antd';
 
-export const WrapperHeader = styled.h1`
-    font-size: 14px;
-    margin: 14px 0;
-    background-color: #0E3746;
-    color: #fff;
-    padding: 10px;
+export const Wrapper = styled.div`
+    background-color: #eae8dc;
+    height: 900px;
+    display: flex;
+    justify-content: center; /* Canh giữa theo chiều ngang */
 `;
 
 export const WrapperContent = styled.div`
-    gap: 20px;
+    background-color: #f4f2ec;
+    width: 600px;
+    height: fit-content;
+    margin-top: 20px;
+    padding-bottom: 20px;
 `;
+
+export const WrapperForm = styled.div`
+    margin: 10px 10px;
+`;
+
+export const WrapperHeader = styled.h1`
+    font-size: 14px;
+    background-color: #0E3746;
+    color: #fff;
+    padding: 10px;
+    margin: 0px;
+`;
+
+
 
 export const WrapperInput = styled.div`
     margin-bottom: 10px
@@ -21,9 +38,7 @@ export const WrapperInput = styled.div`
 `;
 
 export const WrapperLabel = styled.label`
-    // color: #0E3746;
-    // font-size:12px;
-    // font-weight: 600;
+
 `;
 
 export const WrapperUploadFile = styled(Upload)`

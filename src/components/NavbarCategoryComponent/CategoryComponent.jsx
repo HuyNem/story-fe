@@ -1,14 +1,21 @@
 import React from 'react';
 import { CategoryItem } from './style';
 import { IoMdPricetag } from "react-icons/io";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { slug } from '../../utils';
 
-function CategoryComponent({ key, name }) {
-    let str = name.toLowerCase();
-    let str1 = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    let str2 = str1.replace(/\s+/g, '-');
+function CategoryComponent({ categoryKey, name }) {
+
+    const navigate = useNavigate();
+    let slugCategoy = slug(name);
+
     return (
         <CategoryItem>
-            <a href={str2} key={key} title={name}><IoMdPricetag className='icon-tag' />{name}</a>
+            <div key={categoryKey} onClick={() => navigate(`/the-loai/${slugCategoy}`, { state: name })}>
+                <a href={slugCategoy} title={name}>
+                    <IoMdPricetag className='icon-tag' />{name}
+                </a>
+            </div>
         </CategoryItem>
     );
 }

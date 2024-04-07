@@ -1,13 +1,8 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage';
-import PostStory from './pages/PostStory/PostStory';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import { routes } from './routes';
-import HeaderComponent from './components/HeaderComponent/HeaderComponent';
 import DefaultComponent from './components/DefaultComponent/DefaultComponent';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { isJsonString } from './utils';
 import { jwtDecode } from "jwt-decode";
 import * as UserService from './services/UserService';

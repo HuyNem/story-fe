@@ -1,7 +1,6 @@
 import React, { lazy } from 'react';
 import BreadCrumbComponent from '../../components/BreadCrumbComponent/BreadCrumbComponent';
-import { WrapperContent, WrapperHeader, WrapperLabel, WrapperUploadFile } from './style';
-import './style.css';
+import { Wrapper, WrapperContent, WrapperForm, WrapperHeader, WrapperLabel, WrapperUploadFile } from './style';
 import TextArea from 'antd/es/input/TextArea';
 import { Select, Button, Upload, Form, Input } from 'antd';
 import { useSelector } from 'react-redux';
@@ -13,20 +12,25 @@ import { useMutationHooks } from '../../hooks/useMutationHook';
 import { getBase64 } from '../../utils';
 import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-function PostStory(props) {
-    const user = useSelector((state) => state.user);
-    const id_member = user?.id
-    //state
-    const [stateStory, setStateStory] = useState({
+
+function PostStoryPage(props) {
+    const user = useSelector((state) => state?.user);
+    const { TextArea } = Input;
+    const [form] = Form.useForm();
+    const location = useLocation();
+    const rowSelected = location.state.selectRow; //id story
+
+    const [story, setStory] = useState({
         name: '',
         description: '',
-        content: '',
+        image: '',
         category: '',
         author: '',
-        image: '',
-        id_Member: id_member,
+        id_Member: ''
     });
+    const [isPending, setIsPending] = useState(false);
 
     //call api từ bảng category
     const fetchCategory = async () => {
@@ -35,87 +39,110 @@ function PostStory(props) {
     }
     const { data: categories } = useQuery({ queryKey: ['category'], queryFn: fetchCategory })
 
-    //mutation
-    const mutation = useMutationHooks(
-        (data) => {
-            const { name, description, content, category, author, image, id_Member } = data;
-            return StoryService.createStory({ name, description, content, category, author, image, id_Member });
+    //call api load one story
+    const fetchGetStoryApiById = async (rowSelected) => {
+        const res = await StoryService.getStoryById(rowSelected);
+        if (res?.data) {
+            setStory({
+                name: res?.data?.name,
+                description: res?.data?.description,
+                image: res?.data?.image,
+                category: res?.data?.category,
+                author: res?.data?.author,
+                id_Member: res?.data?.id_Member
+            })
         }
-    )
-
-    const { data, isPending, isSuccess, isError } = mutation;
-    console.log('mutation: ', mutation);
-    //useEffect
-    useEffect(() => {
-        if (isSuccess && data?.status === 'OK') {
-            message.success('Truyện của bạn đã được đăng thành công và đang chờ xác nhận từ phía quản trị viên.');
-        } else if (isError) {
-            message.error('Đăng truyện thất bại, vui lòng thử lại');
-        }
-        if (isSuccess && data?.status === 'AR') {
-            message.warning('Tên truyện đã tồn tại');
-        }
-    }, [isSuccess])
-
-    //form
-    const onFinish = () => {
-        mutation.mutate(stateStory);
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
-    const handleOnChange = (e) => {
-        setStateStory({
-            ...stateStory,
-            [e.target.name]: e.target.value,
-        })
     }
 
+    useEffect(() => {
+        if (rowSelected) {
+            fetchGetStoryApiById(rowSelected)
+        }
+    }, [rowSelected]);
+
+    useEffect(() => {
+        form.setFieldsValue(story);
+    }, [form, story]);
+
+
+    //handle onchange
+    const handleOnChange = (e) => {
+        setStory({ ...story, [e.target.name]: e.target.value })
+    }
     const handleOnChangeCategory = (value) => {
-        setStateStory({
-            ...stateStory,
+        console.log('category', value);
+        setStory({
+            ...story,
             category: value.label
         })
     }
-
     const handleOnchangeAvatar = async ({ fileList }) => {
         const file = fileList[0];
         if (!file.url && !file.preview) {
             file.preview = await getBase64(file.originFileObj)
         }
-        setStateStory({
-            ...stateStory,
+        setStory({
+            ...story,
             image: file.preview
         })
     };
 
+    //mutation update story
+    const mutationUpdate = useMutationHooks(
+        (data) => {
+            const { id, token, ...rests } = data;
+            console.log('data: ',data);
+            return StoryService.updateStory(id, token, rests);
+        }
+    )
+    const { data: dataUpdate, isPending: isPendingUpdate, isSuccess } = mutationUpdate;
+
+    const onUpdateStory = () => {
+        setIsPending(true);
+        mutationUpdate.mutate({ id: rowSelected, token: user?.access_token, ...story });
+    }
+
+    //useEffect update story
+    useEffect(() => {
+        if (isSuccess) {
+            if (dataUpdate?.status === 'OK') {
+                message.success('Sửa truyện thành công');
+                setIsPending(false);
+            }
+            if (dataUpdate?.status === 'AR') {
+                message.warning('truyện đã tồn tại');
+                setIsPending(false);
+            }
+        }
+    }, [isSuccess])
+
 
     return (
-        <div style={{ backgroundColor: '#eae8dc' }}>
-            <div style={{ width: '600px', height: 'auto', margin: '0 auto', position: 'revert', backgroundColor: '#f4f2ec', padding: '0px 15px' }}>
-                <BreadCrumbComponent />
+        <Wrapper>
+            <WrapperContent>
+                {/* <BreadCrumbComponent /> */}
                 <Loading isLoading={isPending}>
-                    <WrapperHeader>Đăng truyện</WrapperHeader>
-                    <WrapperContent>
+                    <WrapperHeader>Sửa truyện</WrapperHeader>
+                    <WrapperForm>
                         <Form
                             layout='vertical'
                             name="basic"
                             style={{
-                                width: '900px',
+
                             }}
                             labelCol={{
-                                span: 8,
+                                span: 24,
                             }}
                             wrapperCol={{
-                                span: 16,
+                                span: 24,
                             }}
                             initialValues={{
                                 remember: true,
                             }}
-                            onFinish={onFinish}
-                            onFinishFailed={onFinishFailed}
+                            onFinish={onUpdateStory}
+                            // onFinishFailed={onFinishFailed}
                             autoComplete="off"
+                            form={form}
                         >
                             <Form.Item
                                 label="Tên truyện"
@@ -127,11 +154,11 @@ function PostStory(props) {
                                     },
                                 ]}
                             >
-                                <Input name="name" value={stateStory.name} onChange={handleOnChange} />
+                                <Input allowClear={true} name="name" value={story.name} onChange={handleOnChange} />
                             </Form.Item>
 
                             <Form.Item
-                                label="Mô tả ngắn (200 ký tự)"
+                                label="Mô tả ngắn (500 ký tự)"
                                 name="description"
                                 rules={[
                                     {
@@ -140,21 +167,9 @@ function PostStory(props) {
                                     },
                                 ]}
                             >
-                                <TextArea maxLength={200} name="description" value={stateStory.description} onChange={handleOnChange} ></TextArea>
+                                <TextArea maxLength={500} rows={5} name="description" value={story.description} onChange={handleOnChange} ></TextArea>
                             </Form.Item>
 
-                            <Form.Item
-                                label="Nội dung"
-                                name="content"
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Vui lòng nhập nội dung!',
-                                    },
-                                ]}
-                            >
-                                <TextArea rows={12} name="content" value={stateStory.content} onChange={handleOnChange}></TextArea>
-                            </Form.Item>
 
                             <Form.Item
                                 label="Thể loại"
@@ -168,9 +183,7 @@ function PostStory(props) {
                             >
                                 <Select
                                     labelInValue
-                                    defaultValue={{
-                                        value: 'Thể loại',
-                                    }}
+                                    defaultValue={story.category}
                                     options={categories?.data.map(category => ({
                                         value: category._id,
                                         label: category.name
@@ -189,30 +202,28 @@ function PostStory(props) {
                                     },
                                 ]}
                             >
-                                <Input rows={12} name="author" value={stateStory.author} onChange={handleOnChange}></Input>
+                                <Input rows={12} name="author" value={story.author} onChange={handleOnChange}></Input>
                             </Form.Item>
 
                             <Form.Item
                                 style={{ display: 'flex' }}
                                 name="image"
                             >
-                                {stateStory.image &&
-                                    (<img src={stateStory.image} style={{ width: '200px', height: 'auto', objectFit: 'cover' }} alt='ảnh đại diện' />)
+                                {story.image &&
+                                    (<img src={story.image} style={{ width: '200px', height: 'auto', objectFit: 'cover' }} alt='ảnh đại diện' />)
                                 }
                                 <WrapperUploadFile onChange={handleOnchangeAvatar} maxCount={1}>
                                     <Button>Chọn ảnh</Button>
                                 </WrapperUploadFile>
                             </Form.Item>
 
-                            <Button type="primary" htmlType="submit">
-                                Đăng
-                            </Button>
+                            <Button type="primary" htmlType="submit">Đăng</Button>
                         </Form>
-                    </WrapperContent>
+                    </WrapperForm>
                 </Loading>
-            </div>
-        </div >
+            </WrapperContent>
+        </Wrapper>
     );
 }
 
-export default PostStory;
+export default PostStoryPage;

@@ -24,7 +24,7 @@ function NavbarCategoryComponent() {
             <WrapperLabel>Thể loại</WrapperLabel>
             <hr />
             <WrapperCategoryItem>
-                {categories?.data.map((category) => {
+                {categories && categories?.data.map((category) => {
                     return (
                         <CategoryComponent key={category._id} name={category.name}/>
                     )

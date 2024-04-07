@@ -5,7 +5,7 @@ export const NavCategory = styled.div`
   background-color: #F4F2EC;
   height: fit-content;
   margin-right: 10px;
-  width: 230px;
+  width: 270px;
 `
 
 export const WrapperLabel = styled.h3`
@@ -18,10 +18,11 @@ export const WrapperCategoryItem = styled.div`
   font-weight: 500;
   display: flex;
   flex-wrap: wrap;
-  margin-left: 10px;
 `
 
 export const CategoryItem = styled.div`
+margin-left: 20px;
+margin-bottom: 15px;
   a {
     display: flex;
     width: 110px;
