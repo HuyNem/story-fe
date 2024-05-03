@@ -14,6 +14,7 @@ function DefaultComponent({ children }) {
         <div>
             <HeaderComponent />
             {children}
+            <FooterComponent />
         </div>
     );
 }

@@ -19,6 +19,7 @@ import { resetUser } from '../../redux/slides/userSlide'
 import Loading from '../../components/LoadingComponent/Loading';
 import * as CategoryService from '../../services/CategoryService';
 import { useQuery } from '@tanstack/react-query';
+import { slug } from '../../utils';
 
 
 function HeaderComponent(props) {
@@ -27,7 +28,6 @@ function HeaderComponent(props) {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [userName, setUserName] = useState('');
-    // const [categories, setCategories] = useState([])
     const user = useSelector((state) => state.user);
 
     useEffect(() => {
@@ -40,7 +40,9 @@ function HeaderComponent(props) {
         navigate('/dang-nhap');
     }
 
+
     const handleLogout = async () => {
+        localStorage.clear();
         setLoading(true);
         await UserService.logoutUser();
         dispatch(resetUser());
@@ -64,19 +66,43 @@ function HeaderComponent(props) {
         const res = await CategoryService.getAllCategory()
         return res;
     }
-    const { isPending, data: categories } = useQuery({ queryKey: ['category'], queryFn: fetchCategory })
+    const { isPending, data: categories } = useQuery({ queryKey: ['category'], queryFn: fetchCategory });
+
+    //category
     const renderMenuItems = () => {
         if (isPending || !categories) return [];
 
         return categories?.data.map(category => ({
             key: category._id,
             label: (
-                <a key={category._id} href='#'>
-                    {category.name}
-                </a>
+                <div key={category._id} onClick={() => navigate(`/the-loai/${slug(category.name)}`, { state: category.name })}>
+                    <a style={{ color: '#0E3746' }} href={slug(category.name)}>
+                        {category.name}
+                    </a>
+                </div >
             ),
         }));
     };
+
+    //sort
+    const items = [
+        {
+            key: '1',
+            label: (
+                <a href="/sap-xep/luot-doc">
+                    Lượt đọc
+                </a>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <a href="/sap-xep/hoan-thanh">
+                    Hoàn thành
+                </a>
+            ),
+        },
+    ];
 
     const content = (
         <div onClick={hide}>
@@ -126,41 +152,49 @@ function HeaderComponent(props) {
         }
     }
 
+
     return (
-        <div className='header'>
-            <WrapperHeader style={{ height: '50px', display: 'flex', justifyContent: isHiddenCategory ? 'space-between' : 'unset' }}>
-                <div className='logo' style={{ marginLeft: isHiddenCategory ? '0px' : '180px' }}>
-                    <WrapperTextLogo onClick={() => navigate('/')}>DocTruyenOnline</WrapperTextLogo>
+        <div id='main-header' >
+            <WrapperHeader className='container' style={{ display: 'flex', justifyContent: isHiddenCategory ? 'space-between' : 'space-between', padding: isHiddenCategory ? '0px 20px' : '0px 200px' }}>
+                <div className='logo' style={{ marginLeft: isHiddenCategory ? '0px' : '0px' }}>
+                    <WrapperTextLogo onClick={() => navigate('/')}>TruyenHayOnline</WrapperTextLogo>
                 </div>
+
                 {!isHiddenCategory && (
                     <div className='category'>
                         <Dropdown menu={{ items: renderMenuItems() }} placement="bottomLeft">
-                            <WrapperHeaderCategory>Danh mục</WrapperHeaderCategory>
+                            <WrapperHeaderCategory>Thể loại</WrapperHeaderCategory>
                         </Dropdown>
                     </div>
 
                 )}
                 {!isHiddenSort && (
                     <div className='sort'>
-                        <WrapperHeaderSort>Sắp xếp</WrapperHeaderSort>
+                        <Dropdown menu={{ items, }} placement="bottomLeft">
+                            <WrapperHeaderSort>Sắp xếp</WrapperHeaderSort>
+                        </Dropdown>
                     </div>
-                )}
+                )
+                }
+                {
+                    !isHiddenPostStory && (
+                        <div className='post-story'>
+                            <WrapperHeaderPost onClick={handlePost}> Đăng truyện </WrapperHeaderPost>
+                        </div>
+                    )
+                }
 
-                {!isHiddenPostStory && (
-                    <div className='post-story'>
-                        <WrapperHeaderPost onClick={handlePost}> Đăng truyện </WrapperHeaderPost>
-                    </div>
-                )}
-
-                {!isHiddenSearch && (
-                    <div className='search'>
-                        <WrapperHeaderSearch>
-                            <ButtonInputSearch
-                                placeholder="Tìm truyện, tác giả..."
-                            />
-                        </WrapperHeaderSearch>
-                    </div>
-                )}
+                {
+                    !isHiddenSearch && (
+                        <div className='search'>
+                            <WrapperHeaderSearch>
+                                <ButtonInputSearch
+                                    placeholder="Tìm truyện, tác giả..."
+                                />
+                            </WrapperHeaderSearch>
+                        </div>
+                    )
+                }
 
                 <div className='login-register'>
                     <Loading isLoading={loading}>
@@ -182,7 +216,7 @@ function HeaderComponent(props) {
                         </WrapperHeaderAccount>
                     </Loading>
                 </div>
-            </WrapperHeader>
+            </WrapperHeader >
         </div >
     );
 }

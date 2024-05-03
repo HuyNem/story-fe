@@ -10,13 +10,16 @@ import { useMutationHooks } from '../../hooks/useMutationHook';
 import * as message from '../../components/Message/Message';
 import Loading from '../LoadingComponent/Loading';
 import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 
 function StoryEpisodesList(props) {
+    const navigate = useNavigate();
     //useSelector
     const user = useSelector((state) => state?.user);
     const location = useLocation();
-    const storyId = location?.state?.selectRow; //row in ListStory
+    const storyId = location?.state?.storyId; //row in ListStory
+    const storyName = location?.state?.storyName; 
     const [chapters, setChapters] = useState(null);
     const [isPending, setIsPending] = useState(false);
     const [rowSelected, setRowSelected] = useState();
@@ -55,7 +58,7 @@ function StoryEpisodesList(props) {
     useEffect(() => {
         if (isSuccessDelete) {
             if (dataDelete?.status === 'OK') {
-                message.success('Xóa chapter thành công');
+                message.success(`Xóa thành công`);
                 handleCancelModalDelete();
             }
         }
@@ -77,19 +80,26 @@ function StoryEpisodesList(props) {
             title: 'Chỉnh sửa',
             dataIndex: 'edit',
             key: 'edit',
-            render: () => (<CustomButton>Chỉnh sửa</CustomButton>),
+            render: () => (<CustomButton onClick={handleEditChapter}>Chỉnh sửa</CustomButton>),
         },
         {
             title: 'Xóa',
             dataIndex: 'delete',
             key: 'delete',
-            render: () => (<CustomButton onClick={() => setIsModalOpenDelete(true)} style={{ backgroundColor: 'red', fontWeight: 500 }}>Xóa</CustomButton>),
+            render: () => (<CustomButton onClick={() => setIsModalOpenDelete(true)} style={{ backgroundColor: '#dc3545', fontWeight: 500 }}>Xóa</CustomButton>),
         },
     ];
 
     //dữ liệu của bảng
     const data = chapters || [];
     const dataWidthKey = data.map(item => ({ ...item, key: item._id }));
+
+    //handle edit chapter
+    const handleEditChapter = () => {
+        if(rowSelected) {
+            navigate('/quan-ly-truyen/cac-tap-truyen/sua-chuong', {state: {selectRow: rowSelected}})
+        }
+    }
 
     //cancel modal delete chapter
     const handleCancelModalDelete = () => {
@@ -108,7 +118,7 @@ function StoryEpisodesList(props) {
 
     return (
         <WrapperListChapter>
-            <p>Truyện:</p>
+            <p>Truyện: {storyName}</p>
             <TableComponent
                 columns={columns}
                 data={dataWidthKey}

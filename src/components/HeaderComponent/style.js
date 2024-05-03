@@ -2,20 +2,31 @@ import { Row } from 'antd';
 import styled from 'styled-components';
 
 export const WrapperHeader = styled.div`
-    padding: 0px 20px;
+    height: 50px;
     background-color: #0E3746;
     align-items: center;
+    display: flex;
+    margin: auto;
 
     .ant-dropdown-trigger:hover {
         cursor: pointer;
     }
 
-    @media screen and (max-width: 740px) {
-        height: 45px;
+    @media screen and (max-width: 23.375em) { 
+        display: none;
+    }
+
+    //739
+    @media screen and (max-width: 46.1875em) { 
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0px 2px;
     }
 `
 
 export const WrapperTextLogo = styled.span`
+    margin: 0px;
     font-size:18px;
     color: #fff;
     font-weight: bold;
@@ -23,7 +34,15 @@ export const WrapperTextLogo = styled.span`
     font-family: "Madimi One", sans-serif;
     cursor: pointer;
 
+    //375 iphone SE
+    @media screen and (max-width: 23.375em) { 
+        display: none;
+    }
 
+    //739
+    @media screen and (max-width: 46.1875em) {
+        
+    }
 `
 
 export const WrapperHeaderAccount = styled.div`
@@ -36,8 +55,9 @@ export const WrapperHeaderAccount = styled.div`
     & a {
         color: #fff;
     }
-    @media screen and (max-width: 740px) {
-        width: 200px;
+
+    //739
+    @media screen and (max-width: 46.1875em) {
     }
 `
 
@@ -87,7 +107,7 @@ export const WrapperHeaderPost = styled.div`
 
     @media screen and (max-width: 740px) {
         display: none;
-      }
+    }
 `
 
 export const WrappeContentPopup = styled.p`

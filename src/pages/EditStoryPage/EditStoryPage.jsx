@@ -1,8 +1,7 @@
 import React, { lazy } from 'react';
 import BreadCrumbComponent from '../../components/BreadCrumbComponent/BreadCrumbComponent';
 import { Wrapper, WrapperContent, WrapperForm, WrapperHeader, WrapperLabel, WrapperUploadFile } from './style';
-import TextArea from 'antd/es/input/TextArea';
-import { Select, Button, Upload, Form, Input } from 'antd';
+import { Select, Button, Form, Input } from 'antd';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -13,9 +12,11 @@ import { getBase64 } from '../../utils';
 import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Checkbox } from 'antd';
 
 
 function PostStoryPage(props) {
+    const navigate = useNavigate();
     const user = useSelector((state) => state?.user);
     const { TextArea } = Input;
     const [form] = Form.useForm();
@@ -28,6 +29,7 @@ function PostStoryPage(props) {
         image: '',
         category: '',
         author: '',
+        isCompleted: false,
         id_Member: ''
     });
     const [isPending, setIsPending] = useState(false);
@@ -49,6 +51,7 @@ function PostStoryPage(props) {
                 image: res?.data?.image,
                 category: res?.data?.category,
                 author: res?.data?.author,
+                isCompleted: res?.data?.isCompleted,
                 id_Member: res?.data?.id_Member
             })
         }
@@ -86,12 +89,15 @@ function PostStoryPage(props) {
             image: file.preview
         })
     };
+    const onChangeIsCompleted = (e) => {
+        setStory({ ...story, isCompleted: e.target.checked });
+    }
 
     //mutation update story
     const mutationUpdate = useMutationHooks(
         (data) => {
             const { id, token, ...rests } = data;
-            console.log('data: ',data);
+            console.log('data: ', data);
             return StoryService.updateStory(id, token, rests);
         }
     )
@@ -108,19 +114,33 @@ function PostStoryPage(props) {
             if (dataUpdate?.status === 'OK') {
                 message.success('Sửa truyện thành công');
                 setIsPending(false);
+                navigate('/quan-ly-truyen');
             }
-            if (dataUpdate?.status === 'AR') {
+            if (dataUpdate?.status === 'AE') {
                 message.warning('truyện đã tồn tại');
                 setIsPending(false);
             }
         }
     }, [isSuccess])
 
+    const breadcrumbItems = [
+        {
+            href: 'http://localhost:3000/',
+            title: 'Trang chủ',
+        },
+        {
+            href: 'http://localhost:3000/quan-ly-truyen',
+            title: 'Quản lý truyện',
+        },
+        {
+            title: 'Sửa truyện',
+        },
+    ];
 
     return (
         <Wrapper>
+            <BreadCrumbComponent items={breadcrumbItems} />
             <WrapperContent>
-                {/* <BreadCrumbComponent /> */}
                 <Loading isLoading={isPending}>
                     <WrapperHeader>Sửa truyện</WrapperHeader>
                     <WrapperForm>
@@ -205,19 +225,32 @@ function PostStoryPage(props) {
                                 <Input rows={12} name="author" value={story.author} onChange={handleOnChange}></Input>
                             </Form.Item>
 
+                            {story.image &&
+                                (<img src={story.image} style={{ width: '200px', height: 'auto', objectFit: 'cover' }} alt='ảnh đại diện' />)
+                            }
                             <Form.Item
-                                style={{ display: 'flex' }}
+
+                                label="Ảnh bìa truyện (Dung lượng cần nhỏ hơn 1MB. Tên ảnh cần viết không dấu)"
                                 name="image"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng chọn ảnh!',
+                                    },
+                                ]}
                             >
-                                {story.image &&
-                                    (<img src={story.image} style={{ width: '200px', height: 'auto', objectFit: 'cover' }} alt='ảnh đại diện' />)
-                                }
                                 <WrapperUploadFile onChange={handleOnchangeAvatar} maxCount={1}>
                                     <Button>Chọn ảnh</Button>
                                 </WrapperUploadFile>
                             </Form.Item>
 
-                            <Button type="primary" htmlType="submit">Đăng</Button>
+                            <Form.Item
+                                name="isCompleted"
+                            >
+                                <Checkbox checked={story.isCompleted} onChange={onChangeIsCompleted}>Hoàn thành</Checkbox>
+                            </Form.Item>
+
+                            <Button type="primary" htmlType="submit">Lưu</Button>
                         </Form>
                     </WrapperForm>
                 </Loading>

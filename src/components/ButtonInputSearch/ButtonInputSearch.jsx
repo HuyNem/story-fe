@@ -1,20 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import React, { useState } from 'react';
+import { Button, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import InputComponent from '../InputComponent/InputComponent';
-import ButtonComponent from '../ButtonComponent/ButtonComponent';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-ButtonInputSearch.propTypes = {
-
-};
 
 function ButtonInputSearch(props) {
-    const { size, placeholder, textButton } = props;
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { placeholder } = props;
+    const [search, setSearch] = useState('');
+
+    const handleEnterSearch = (e) => {
+        if (e.key === 'Enter') {
+            if (search !== '') {
+                navigate(`/tim-kiem/${search}`, { state: { q: search } });
+                setSearch('');
+            } else {
+                navigate('/')
+            }
+
+        }
+    }
+    const handleSearch = () => {
+        if (search !== '') {
+            navigate(`/tim-kiem/${search}`, { state: { q: search } });
+            setSearch('');
+        } else {
+            navigate('/');
+        }
+    };
+    const handleChange = (e) => {
+        setSearch(e.target.value);
+    };
+
     return (
         <div style={{ display: 'flex', margin: '5px' }}>
-            <InputComponent placeholder={placeholder} size="middle" style={{ borderRadius: "0px", }} />
-            <Button type="link" size="middle" icon={<SearchOutlined />} style={{ backgroundColor: '#fff', borderRadius: '0px', color: '#0E3746', padding: "0px 5px" }}>{textButton}</Button>
+            <Input value={search} onChange={handleChange} onKeyDown={handleEnterSearch} placeholder={placeholder} size="middle" style={{ borderRadius: "0px", }} />
+            <Button onClick={handleSearch} type="link" size="middle" icon={<SearchOutlined />} style={{ backgroundColor: '#fff', borderRadius: '0px', color: '#0E3746', padding: "0px 5px" }}></Button>
         </div>
     );
 }

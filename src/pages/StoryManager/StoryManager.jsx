@@ -1,13 +1,28 @@
 import React from 'react';
 import ListStoryComponent from '../../components/StoryManagerComponent/ListStoryComponent';
-import { WrapperStoryManager } from './style';
+import { Wrapper, WrapperStoryManager } from './style';
+import BreadCrumbComponent from '../../components/BreadCrumbComponent/BreadCrumbComponent';
 
-function StoryManager(props) {
+function StoryManager() {
+    const breadcrumbItems = [
+        {
+            href: 'http://localhost:3000/',
+            title: 'Trang chủ',
+        },
+        {
+            title: `Quản lý truyện`,
+        },
+    ];
     return (
-        <WrapperStoryManager>
-            <h5>Quản lý truyện</h5>
-            <ListStoryComponent />
-        </WrapperStoryManager>
+        <Wrapper>
+            <BreadCrumbComponent items={breadcrumbItems} />
+
+            <WrapperStoryManager>
+                <h5>Quản lý truyện</h5>
+                <ListStoryComponent />
+            </WrapperStoryManager>
+        </Wrapper>
+
     );
 }
 

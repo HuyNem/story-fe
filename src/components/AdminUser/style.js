@@ -10,5 +10,6 @@ export const WrapperHeader = styled.div`
     font-weight: 500;
 `
 export const WrapperTable = styled.div`
+    margin-top: 20px;
 
 `

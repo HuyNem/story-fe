@@ -3,17 +3,24 @@ import { Upload } from 'antd';
 
 export const Wrapper = styled.div`
     background-color: #eae8dc;
-    height: 900px;
+    height: fit-content;
     display: flex;
-    justify-content: center; /* Canh giữa theo chiều ngang */
+    flex-direction: column;
+    align-items: center;
+    
+    .ant-breadcrumb {
+        margin: 10px 0px;
+        margin-right: 340px;
+    }
 `;
 
 export const WrapperContent = styled.div`
     background-color: #f4f2ec;
     width: 600px;
     height: fit-content;
-    margin-top: 20px;
     padding-bottom: 20px;
+    margin-bottom: 20px;
+
 `;
 
 export const WrapperForm = styled.div`

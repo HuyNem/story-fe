@@ -1,4 +1,5 @@
 import axios from "axios";
+import { axiosJWT } from "./UserService";
 
 export const getAllChapter = async (storyId) => {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/chapter/${storyId}`);
@@ -16,5 +17,27 @@ export const deleteChapter = async (chapId, access_token) => {
             token: `Bearer ${access_token}`,
         }
     });
+    return res.data;
+};
+
+//get chapter by id
+export const getChapterById = async (chapterId) => {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/chapter/get-chapter/${chapterId}`);
+    return res.data;
+};
+
+//update chapter
+export const updateChapter = async (chapterId, access_token, data) => {
+    const res = await axiosJWT.put(`${process.env.REACT_APP_API_URL}/api/chapter/update-chapter/${chapterId}`, data, {
+        headers: {
+            token: `Bearer ${access_token}`,
+        }
+    });
+    return res.data;
+};
+
+//get chapter by id
+export const getChapter = async (storyId, chapNum) => {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/chapter/${storyId}/${chapNum}`);
     return res.data;
 };

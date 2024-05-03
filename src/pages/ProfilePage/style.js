@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import { Upload } from 'antd';
 
+export const Wrapper = styled.div`
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+`;
+
 export const WrapperHeaderProfile = styled.div`
     width: 700px;
     height: 500px;
@@ -63,7 +71,7 @@ export const WrapperInput = styled.div`
 `;
 
 export const WrapperChangePass = styled.div`
-    margin-top: 20px;
+    margin-top: 70px;
     margin-left: 15px;
 `;
 

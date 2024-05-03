@@ -3,7 +3,7 @@ import { WrapperPagination, WrapperStory, WrapperStoryByCategory, WrapperStoryCa
 import Loading from '../LoadingComponent/Loading';
 import { useLocation } from 'react-router-dom';
 import * as StoryService from '../../services/StoryService';
-import StoryCategoryComponent from './StoryCategoryComponent';
+import HorizontalStory from './HorizontalStory';
 import { Pagination } from 'antd';
 
 
@@ -45,7 +45,7 @@ function StoryByCategoryComponent(props) {
                 <hr />
                 {stories?.map((data) => {
                     return (
-                        <StoryCategoryComponent
+                        <HorizontalStory
                             key={data._id}
                             img={data.image}
                             name={data.name}

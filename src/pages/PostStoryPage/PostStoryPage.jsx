@@ -1,9 +1,8 @@
 import React, { lazy } from 'react';
-import BreadCrumbComponent from '../../components/BreadCrumbComponent/BreadCrumbComponent';
-import { Wrapper, WrapperContent, WrapperForm, WrapperHeader, WrapperLabel, WrapperUploadFile } from './style';
+import { Wrapper, WrapperContent, WrapperForm, WrapperHeader, WrapperUploadFile } from './style';
 import './style.css';
 import TextArea from 'antd/es/input/TextArea';
-import { Select, Button, Upload, Form, Input } from 'antd';
+import { Select, Button, Form, Input } from 'antd';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -14,6 +13,7 @@ import { getBase64 } from '../../utils';
 import Loading from '../../components/LoadingComponent/Loading';
 import * as message from '../../components/Message/Message';
 import { useNavigate } from 'react-router-dom';
+import BreadCrumbComponent from '../../components/BreadCrumbComponent/BreadCrumbComponent';
 
 
 function PostStoryPage(props) {
@@ -30,7 +30,7 @@ function PostStoryPage(props) {
         id_Member: id_member,
     });
 
-    //call api từ bảng category
+    //call api from table category
     const fetchCategory = async () => {
         const res = await CategoryService.getAllCategory()
         return res;
@@ -93,11 +93,20 @@ function PostStoryPage(props) {
     };
 
     // <BreadCrumbComponent />
+    const breadcrumbItems = [
+        {
+            href: 'http://localhost:3000/',
+            title: 'Trang chủ',
+        },
+        {
+            title: 'Đăng truyện',
+        },
+    ];
 
     return (
         <Wrapper>
+            <BreadCrumbComponent items={breadcrumbItems} />
             <WrapperContent>
-                {/* <BreadCrumbComponent /> */}
                 <Loading isLoading={isPending}>
                     <WrapperHeader>Đăng truyện</WrapperHeader>
                     <WrapperForm>
@@ -134,7 +143,7 @@ function PostStoryPage(props) {
                             </Form.Item>
 
                             <Form.Item
-                                label="Mô tả ngắn (500 ký tự)"
+                                label="Mô tả ngắn (200 ký tự)"
                                 name="description"
                                 rules={[
                                     {
@@ -143,21 +152,8 @@ function PostStoryPage(props) {
                                     },
                                 ]}
                             >
-                                <TextArea maxLength={500} name="description" value={stateStory.description} onChange={handleOnChange} ></TextArea>
+                                <TextArea maxLength={200} name="description" value={stateStory.description} onChange={handleOnChange} ></TextArea>
                             </Form.Item>
-
-                            {/* <Form.Item
-                                    label="Nội dung"
-                                    name="content"
-                                    rules={[
-                                        {
-                                            required: true,
-                                            message: 'Vui lòng nhập nội dung!',
-                                        },
-                                    ]}
-                                >
-                                    <TextArea rows={12} name="content" value={stateStory.content} onChange={handleOnChange}></TextArea>
-                                </Form.Item> */}
 
                             <Form.Item
                                 label="Thể loại"
@@ -195,13 +191,20 @@ function PostStoryPage(props) {
                                 <Input rows={12} name="author" value={stateStory.author} onChange={handleOnChange}></Input>
                             </Form.Item>
 
+                            {stateStory.image &&
+                                (<img src={stateStory.image} style={{ width: '200px', height: 'auto', objectFit: 'cover' }} alt='ảnh đại diện' />)
+                            }
+
                             <Form.Item
-                                style={{ display: 'flex' }}
+                                label="Ảnh bìa truyện (Dung lượng cần nhỏ hơn 1MB. Tên ảnh cần viết không dấu)"
                                 name="image"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Vui lòng chọn ảnh!',
+                                    },
+                                ]}
                             >
-                                {stateStory.image &&
-                                    (<img src={stateStory.image} style={{ width: '200px', height: 'auto', objectFit: 'cover' }} alt='ảnh đại diện' />)
-                                }
                                 <WrapperUploadFile onChange={handleOnchangeAvatar} maxCount={1}>
                                     <Button>Chọn ảnh</Button>
                                 </WrapperUploadFile>

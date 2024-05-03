@@ -1,29 +1,33 @@
 import React from 'react';
-import StoryComponent from '../../components/StoryComponent/StoryComponents';
 import NewStoryComponent from '../../components/StoryComponent/NewStoryComponent';
 import NavbarCategoryComponent from '../../components/NavbarCategoryComponent/NavbarCategoryComponent';
-import BreadCrumbComponent from '../../components/BreadCrumbComponent/BreadCrumbComponent';
 import { Col, Row } from 'antd';
+import TopView from '../../components/NavbarCategoryComponent/TopView';
+import { Wrapper, WrapperContent, WrapperNav } from './style';
+import CompletedStory from '../../components/StoryComponent/CompletedStory';
 
 
-function HomePage(props) {
+function HomePage() {
+
+    const breadcrumbItems = [
+        {
+            href: 'http://localhost:3000/',
+            title: 'Trang chủ',
+        },
+
+    ];
 
     return (
-        <>
-            <div style={{ padding: '15px 200px', backgroundColor: '#EAE8DC' }}>
-                <BreadCrumbComponent />
-            </div>
-            <div style={{ padding: '5px 200px', backgroundColor: '#EAE8DC' }}>
-                <Row>
-                    <Col span={6}>
-                        <NavbarCategoryComponent />
-                    </Col>
-                    <Col span={18}>
-                        <NewStoryComponent />
-                    </Col>
-                </Row>
-            </div>
-        </>
+        <Wrapper>
+            <WrapperNav>
+                <NavbarCategoryComponent />
+                <TopView />
+            </WrapperNav>
+            <WrapperContent>
+                <NewStoryComponent />
+                <CompletedStory />
+            </WrapperContent>
+        </Wrapper>
 
     );
 }

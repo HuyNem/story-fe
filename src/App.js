@@ -52,11 +52,6 @@ export function App() {
   }
   )
 
-  // const handleGetDetailUser = async (id, token) => {
-  //   const res = await UserService.getDetailUser(id, token);
-  //   dispatch(updateUser({ ...res?.data, access_token: token }));
-  // }
-
   return (
     <div>
       <Router>

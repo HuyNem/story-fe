@@ -12,6 +12,11 @@ import StoryManager from "../pages/StoryManager/StoryManager";
 import AdminPage from "../pages/AdminPage/AdminPage";
 import StoryEpisodes from "../pages/StoryEpisodes/StoryEpisodes";
 import PostChapterPage from "../pages/PostChapterPage/PostChapterPage";
+import EditChapterPage from "../pages/EditChapterPage/EditChapterPage";
+import Chapter from "../pages/ChapterPage/Chapter";
+import Search from "../pages/SearchPage/SearchPage";
+import SortTopView from "../pages/SortPage/SortTopView";
+import SortCompleted from "../pages/SortPage/SortCompleted";
 
 export const routes = [
     {
@@ -25,7 +30,7 @@ export const routes = [
         isShowHeader: true,
     },
     {
-        path: '/sua-truyen',
+        path: '/quan-ly-truyen/sua-truyen',
         page: EditStoryPage,
         isShowHeader: true,
     },
@@ -40,8 +45,13 @@ export const routes = [
         isShowHeader: false,
     },
     {
-        path: '/:id',
+        path: 'truyen/:name',
         page: StoryDetailPage,
+        isShowHeader: true,
+    },
+    {
+        path: 'truyen/:name/truyenhay',
+        page: Chapter,
         isShowHeader: true,
     },
     {
@@ -55,6 +65,16 @@ export const routes = [
         isShowHeader: true,
     },
     {
+        path: '/sap-xep/luot-doc',
+        page: SortTopView,
+        isShowHeader: true,
+    },
+    {
+        path: '/sap-xep/hoan-thanh',
+        page: SortCompleted,
+        isShowHeader: true,
+    },
+    {
         path: '/quan-ly-truyen/cac-tap-truyen',
         page: StoryEpisodes,
         isShowHeader: true,
@@ -65,6 +85,11 @@ export const routes = [
         isShowHeader: true,
     },
     {
+        path: '/quan-ly-truyen/cac-tap-truyen/sua-chuong',
+        page: EditChapterPage,
+        isShowHeader: true,
+    },
+    {
         path: '/the-loai/:category',
         page: StoryCategory,
         isShowHeader: true,
@@ -72,6 +97,11 @@ export const routes = [
     {
         path: '/system/admin',
         page: AdminPage,
+    },
+    {
+        path: '/tim-kiem/:search',
+        page: Search,
+        isShowHeader: true,
     },
     {
         path: '*',

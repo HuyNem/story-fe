@@ -10,13 +10,12 @@ import { CustomButton, WrapperListStory } from './style';
 import { useNavigate } from 'react-router-dom';
 
 
-
 function ListStoryComponent(props) {
     const navigate = useNavigate();
     const user = useSelector((state) => state.user);
     const [memberStories, setMemberStories] = useState(null);
     const [isPending, setIsPending] = useState(false);
-    const [rowSelected, setRowSelected] = useState();
+    const [rowSelected, setRowSelected] = useState({});
 
     const fetchMemberStoriesApi = async () => {
         setIsPending(true);
@@ -40,13 +39,13 @@ function ListStoryComponent(props) {
 
     const handleEditStory = () => {
         if (rowSelected) {
-            navigate('/sua-truyen', { state: { selectRow: rowSelected } });
+            navigate('/quan-ly-truyen/sua-truyen', { state: { selectRow: rowSelected.storyId } });
         }
     }
 
     const handleStoryEpisodes = () => {
         if (rowSelected) {
-            navigate('/quan-ly-truyen/cac-tap-truyen/', { state: { selectRow: rowSelected } });
+            navigate('/quan-ly-truyen/cac-tap-truyen/', { state: { storyId: rowSelected.storyId, storyName: rowSelected.storyName } });
         }
     }
 
@@ -61,7 +60,12 @@ function ListStoryComponent(props) {
             title: 'Tên truyện',
             dataIndex: 'name',
             key: 'name',
-            // render: (text) => <a>{text}</a>,
+        },
+        {
+            title: 'Hoàn thành',
+            dataIndex: 'isCompleted',
+            key: 'isCompleted',
+            render: (isCompleted) => isCompleted ? 'Hoàn thành' : 'Chưa hoàn thành',
         },
         {
             title: 'Trạng thái',
@@ -79,12 +83,12 @@ function ListStoryComponent(props) {
             title: 'Các tập',
             dataIndex: 'episodes',
             key: 'episodes',
-            render: () => (<CustomButton onClick={handleStoryEpisodes}>Các tập</CustomButton>),
+            render: () => (<CustomButton onClick={handleStoryEpisodes}>Các chương</CustomButton>),
         },
         {
             title: 'Thêm tập',
             key: 'addEpisodes',
-            render: () => (<CustomButton onClick={handleAddChap} bgColor='green' hoverColor='#035a03'>Thêm tập</CustomButton>),
+            render: () => (<CustomButton onClick={handleAddChap} bgColor='green' hoverColor='#035a03'>Thêm chương</CustomButton>),
         },
     ];
 
@@ -104,7 +108,7 @@ function ListStoryComponent(props) {
                 onRow={(record, rowIndex) => {
                     return {
                         onMouseEnter: (event) => {
-                            setRowSelected(record._id);
+                            setRowSelected({storyId: record._id, storyName: record.name});
                         },
                     };
                 }}

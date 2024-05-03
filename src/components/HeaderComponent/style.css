@@ -1,6 +1,15 @@
 /* a {
     color: #4e6f7a;
 } */
+
+#main-header {
+    height: 50px;
+    background-color: #0E3746;
+    color: #fff;
+}
+
+
+
 .ContentPopup {
     margin: 5px 0px;
 }
@@ -17,22 +26,4 @@
     background-color: #F4F2EC;
 }
 
-.logo {
-    margin-left: 180px;
-}
-.category {
-    margin-left: 30px;
-}
-.sort {
-    margin-left: 30px;
-}
 
-.post-story {
-    margin-left: 30px;
-}
-.search {
-    margin-left: 30px;
-}
-.login-register {
-    margin-left: 30px;
-}

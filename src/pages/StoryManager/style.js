@@ -1,11 +1,18 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+    margin-bottom: 20px;
+    .ant-breadcrumb {
+        margin: 10px 0px;
+        margin-left: 185px;
+    }
+`
+
 export const WrapperStoryManager = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    margin-top: 40px;
+    height: fit-content;
 
     h5 {
         width: 70%;

@@ -9,6 +9,10 @@ import AdminStory from '../../components/AdminStory/AdminStory';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import AdminCategory from '../../components/AdminCategory/AdminCategory';
+import AdminStoryApprovalQueue from '../../components/AdminStoryApprovalQueue/AdminStoryApproval';
+import { LuBookOpen } from "react-icons/lu";
+import { LuBookOpenCheck } from "react-icons/lu";
+import { MdOutlineCategory } from "react-icons/md";
 
 function getItem(label, key, icon, children, type) {
     return {
@@ -21,38 +25,15 @@ function getItem(label, key, icon, children, type) {
 }
 
 const items = [
-    getItem('Quản trị người dùng', 'sub1', <FaUsers />, [
-        getItem('Quản lý người dùng', 'list-user'),
-        getItem('Option 2', '2'),
-    ]),
-    getItem('Quản trị truyện', 'sub2', <GiOpenBook />, [
-        getItem('Quản lý thể loại', 'quanlytheloai', null, [getItem('Danh sách thể loại', 'list-category'), getItem('Thêm thể loại', 'them-the-loai')], 'group'),
-        getItem('Quản lý truyện', 'quanlytruyen', null, [getItem('Danh sách truyện', 'list-story'), getItem('Danh sách chờ duyệt', 'danh-sach-cho-duyet')], 'group'),
-
-    ]),
-    {
-        type: 'divider',
-    },
-    getItem('Navigation Three', 'sub4', <SettingOutlined />, [
-        getItem('Option 9', '9'),
-        getItem('Option 10', '10'),
-        getItem('Option 11', '11'),
-        getItem('Option 12', '12'),
-    ]),
+    getItem('Người dùng', 'list-user', <FaUsers />),
+    getItem('Thể loại', 'list-category', <MdOutlineCategory />),
+    getItem('Truyện', 'list-story', <LuBookOpenCheck />),
+    getItem('Truyện chờ duyệt', 'list-story-pending-approval', <LuBookOpen />)
 ];
 
 function AdminPage(props) {
     const { } = props;
     const user = useSelector((state) => state.user);
-    // const [admin, setAdmin] = useState(user?.isAdmin);
-    // const [email, setEmail] = useState(user?.email);
-    // const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     if (user?.isAdmin === false && user?.email === '') {
-    //         navigate('/404')
-    //     }
-    // })
 
     const [openKey, setOpenKey] = useState('');
     const onClick = (e) => {
@@ -77,6 +58,7 @@ function AdminPage(props) {
                     {openKey === 'list-user' && <AdminUser />}
                     {openKey === 'list-category' && <AdminCategory />}
                     {openKey === 'list-story' && <AdminStory />}
+                    {openKey === 'list-story-pending-approval' && <AdminStoryApprovalQueue />}
                 </div>
             </div>
         </div>

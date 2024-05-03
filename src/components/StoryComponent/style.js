@@ -15,6 +15,7 @@ export const Story = styled.div`
 
     img {
       width:150px;
+      height: 231px;
     }
 
     p {
@@ -38,10 +39,18 @@ export const WrapperNewStory = styled.div`
   border: 1px solid #F4F2EC;
   background-color: #F4F2EC;
   max-width: 650px;
-  margin-left: 50px;
 
   h3 {
     color: #0E3746;
+
+    margin: 0px;
+    padding:  10px 0px;
+
+    font-size: 16px;
+  }
+
+  hr {
+    margin: 0px;
   }
 `
 
@@ -57,8 +66,8 @@ export const WrapperStoryByCategory = styled.div`
     border: 1px solid #F4F2EC;
     background-color: #F4F2EC;
     max-width: 100;
-    height: 600px;
-    margin-top: 50px;
+    height: fit-content;
+    margin-bottom: 10px;
 
     h3 {
       color: #0E3746;
@@ -109,6 +118,12 @@ export const WrapperStoryCategoryRight = styled.div`
     margin-top: 10px;
     margin-left: 5px;
   }
+
+  .full {
+    color: red;
+    font-weight: 600;
+  }
+
 `
 
 
@@ -134,4 +149,18 @@ justify-content: center;
   .ant-pagination-item-active a:hover{
     color: #fff;
   }
+`
+
+//story completed
+export const WrapperStoryCompleted = styled.div`
+    border: 1px solid #F4F2EC;
+    background-color: #F4F2EC;
+    max-width: 650px;
+    height: fit-content;
+    margin-top: 10px;
+
+    h3 {
+      color: #0E3746;
+    }
+
 `

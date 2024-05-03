@@ -13,7 +13,7 @@ export const CustomButton = styled.div`
     color: #fff;
     border: none;
 
-    width: 70px;
+    width: 86px;
     padding: 5px;
 
     display: flex;
