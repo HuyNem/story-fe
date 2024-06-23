@@ -20,6 +20,15 @@ const Header = () => {
     setOpen(false);
   };
 
+  //dang truyen
+  const handlePost = () => {
+    if (user?.access_token) {
+        navigate('/dang-truyen');
+    } else {
+        navigate('/dang-nhap');
+    }
+}
+
   return (
     <div className="header">
       <div className="list-header" onClick={showDrawer}>
@@ -33,7 +42,7 @@ const Header = () => {
       <ul className="header-menu">
         <li>Thể loại</li>
         <li>Sắp xếp</li>
-        <li>Đăng truyện</li>
+        <li className="post-story" onClick={handlePost}>Đăng truyện</li>
         <li>
           <input type="text" placeholder="Tên truyện, tên tác giả..." />
         </li>
