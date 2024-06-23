@@ -12,8 +12,9 @@ export const NavCategory = styled.div`
   }
 
   //mobile
-  @media screen and (max-width: 739px) {
-    display: none;
+  @media screen and (max-width: 500px) {
+    width: 100%;
+    background-color: #fff;
 }
 `
 
@@ -23,13 +24,21 @@ export const WrapperLabel = styled.h3`
   margin: 0px;
 
   font-size: 16px;
-  padding: 10px 10px;
+  padding: 10px;
+  @media (max-width: 500px) {
+    padding: 10px 20px;
+  }
 `
 export const WrapperCategoryItem = styled.div`
   color: #0E3746;
   font-weight: 500;
   display: flex;
   flex-wrap: wrap;
+
+  @media (max-width: 500px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 `
 
 export const CategoryItem = styled.div`

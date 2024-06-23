@@ -25,6 +25,15 @@ export const Story = styled.div`
       font-weight: 600;
     }
 
+    @media (max-width: 500px) {
+      p{
+        margin-top: 5px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+
     &:hover {
       cursor: pointer;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -61,6 +70,11 @@ export const WrapperNewStory = styled.div`
 export const WrapperTitle = styled.h3`
   font-size: 16px;
   margin-left: 10px;
+
+  @media (max-width: 500px) {
+    font-size: 14px;
+    margin-left: 10px;
+  }
 `
 export const WrapperStoryByCategory = styled.div`
     border: 1px solid #F4F2EC;
@@ -124,6 +138,11 @@ export const WrapperStoryCategoryRight = styled.div`
     font-weight: 600;
   }
 
+  @media (max-width: 500px) {
+    h5 {
+      font-size: 12px;
+    }
+  }
 `
 
 

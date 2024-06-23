@@ -1,0 +1,33 @@
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.breadcrumb {
+    padding: 15px 150px;
+    background-color: #EAE8DC;
+}
+
+.detail-body {
+    padding: 5px 150px;
+    background-color: #EAE8DC;
+    display: flex;
+}
+
+@media(max-width: 500px) {
+    .detail-body {
+        padding: 0px;
+    }
+
+    .detail-body-left{
+        width: 100%;
+    }
+    
+    .breadcrumb {
+        display: none;
+    }
+    .detail-body-right {
+        display: none;
+    }
+}

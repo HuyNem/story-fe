@@ -86,3 +86,21 @@
     }
 }
 
+@media(max-width:500px) {
+    .main-footer {
+        height: 10vh; /* Độ cao của footer */
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .container p {
+        width: 90%;
+    }
+    ul {
+        display: none;
+    }
+}
+

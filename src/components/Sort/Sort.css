@@ -1,0 +1,21 @@
+.sort .title {
+    color: #0E3746;
+    font-weight: 700;
+    margin: 0px;
+    padding: 10px 20px;
+}
+
+.sort .sort-body {
+    color: #0E3746;
+    font-weight: 500;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.sort .sort-body a{
+    color: #0E3746;
+    text-decoration: none;
+    display: block;
+    margin: 0px 20px;
+}
+

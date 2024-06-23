@@ -13,9 +13,12 @@ import { message } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
+import { useNavigate } from 'react-router-dom';
+import { slug } from '../../utils';
 
 
 function AdminStoryPendingApproval() {
+    const navigate = useNavigate();
     const user = useSelector((state) => state?.user);
     const [rowSelected, setRowSelected] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);

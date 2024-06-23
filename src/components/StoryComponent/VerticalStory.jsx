@@ -1,6 +1,6 @@
 import React from 'react';
 import { Story } from './style';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { slug } from '../../utils';
 
 function VerticalStory({ image, name, key, id }) {

@@ -16,6 +16,10 @@ export const Wrapper = styled.div`
 export const WrapperNav = styled.div`
     display: flex;
     flex-direction: column;
+
+    @media(max-width: 500px) {
+        display: none;
+    }
 `
 
 export const WrapperContent = styled.div`

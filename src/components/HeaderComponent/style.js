@@ -23,6 +23,7 @@ export const WrapperHeader = styled.div`
         width: 100%;
         padding: 0px 2px;
     }
+
 `
 
 export const WrapperTextLogo = styled.span`
