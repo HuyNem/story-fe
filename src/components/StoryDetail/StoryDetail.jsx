@@ -66,7 +66,7 @@ function StoryDetail(props) {
                 </tr>
                 <tr>
                   <td>
-                    <h5>Tác giả:</h5>
+                    <h4>Tác giả:</h4>
                   </td>
                   <td>
                     <h4>{storyDetail?.author}</h4>
@@ -115,14 +115,16 @@ function StoryDetail(props) {
           <a onClick={() => setIsOpent(!isOpent)}>
             <i>{isOpent ? "Rút gọn" : "Xem thêm"}</i>
           </a>
+
           <hr />
 
           <WrappterChapter>
             <h3>Danh sách chương:</h3>
             {chapter &&
-              chapter.map((chap) => (
+              chapter.map((chap, index) => (
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}
+                  key={index}
                 >
                   <p
                     onClick={() =>

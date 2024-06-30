@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const WrapperStoryDetail = styled.div`
   padding: 10px;
   background-color: #f4f2ec;
-  margin-right: 10px;
   height: fit-content;
 
   .ant-btn {

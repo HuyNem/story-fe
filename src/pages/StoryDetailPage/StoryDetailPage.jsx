@@ -20,21 +20,22 @@ function StoryDetailPage() {
   ];
 
   return (
-    <div className="detail-container">
+    <section className="story-detail">
       <div className="breadcrumb">
         <BreadCrumbComponent items={breadcrumbItems} />
       </div>
+
       <div className="detail-body">
-        <div className="detail-body-left">
+        <div className="content">
           <StoryDetail />
           <CommentComponent />
         </div>
 
-        <div className="detail-body-right">
+        <div className="nav">
           <NavbarCategoryComponent />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

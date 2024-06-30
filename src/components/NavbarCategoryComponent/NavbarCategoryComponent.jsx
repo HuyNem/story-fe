@@ -4,6 +4,7 @@ import { WrapperCategoryItem, NavCategory } from './style';
 import { useQuery } from '@tanstack/react-query';
 import CategoryComponent from './CategoryComponent';
 import * as CategoryService from '../../services/CategoryService';
+import SkeletonCategories from '../Skeleton/SkeletonCategories';
 
 
 function NavbarCategoryComponent() {
@@ -17,6 +18,7 @@ function NavbarCategoryComponent() {
         <NavCategory>
             <WrapperLabel>Thể loại</WrapperLabel>
             <hr />
+            <SkeletonCategories loading={isPending}/>
             <WrapperCategoryItem>
                 {categories && categories?.data.map((category) => {
                     return (

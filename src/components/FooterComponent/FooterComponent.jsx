@@ -1,45 +1,41 @@
-import React from 'react';
-import './style.css';
-
-
+import React from "react";
+import "./style.css";
 
 function FooterComponent() {
-    return (
-        <div className='main-footer'>
-            <div className="container">
-                <p >
-                    Truyện Hay Online là cộng đồng các bạn đam mê truyện tranh lớn nhất Việt Nam.
-                    Website đóng vai trò kết nối nhóm dịch và các bạn yêu thích đọc truyện tranh.
-                    Bản quyền truyện đăng trên TTG thuộc về nhóm dịch và tác giả
-                    NgocHuy © 2024 · Version: 1
-                </p>
+  return (
+    <footer className="main-footer">
+      <p>
+        Trang web này được tạo ra với mục đích học tập rèn luyện kỹ năng lập trình. 
+        Chúng tôi không có bất kỳ hoạt động kinh doanh nào trên trang web này. 
+        Mọi nội dung đều tham khảo trên trang web . 
+        Cảm ơn bạn đã ghé thăm và hy vọng bạn sẽ tìm thấy những thông tin hữu ích!
+      </p>
 
-                <ul>
-                    <li>Duyệt theo</li>
-                    <li>Truyện hot</li>
-                    <li>Tag</li>
-                    <li>Tác giả</li>
-                    <li>Tìm kiếm</li>
-                </ul>
+      <ul className="ul-footer">
+        <li>Duyệt theo</li>
+        <li>Truyện hot</li>
+        <li>Tag</li>
+        <li>Tác giả</li>
+        <li>Tìm kiếm</li>
+      </ul>
 
-                <ul>
-                    <li>Phân Loại</li>
-                    <li>Kiếm Hiệp</li>
-                    <li>Huyền Huyễn</li>
-                    <li>Ngôn Tình</li>
-                    <li>Truyện Ma</li>
-                    <li>Trinh Thám</li>
-                </ul>
+      <ul className="ul-footer">
+        <li>Phân Loại</li>
+        <li>Kiếm Hiệp</li>
+        <li>Huyền Huyễn</li>
+        <li>Ngôn Tình</li>
+        <li>Truyện Ma</li>
+        <li>Trinh Thám</li>
+      </ul>
 
-                <ul>
-                    <li>Mạng xã hội</li>
-                    <li>Facebook</li>
-                    <li>Instagram</li>
-                    <li>Tiktok</li>
-                </ul>
-            </div>
-        </div>
-    );
+      <ul className="ul-footer">
+        <li>Mạng xã hội</li>
+        <li>Facebook</li>
+        <li>Instagram</li>
+        <li>Tiktok</li>
+      </ul>
+    </footer>
+  );
 }
 
 export default FooterComponent;

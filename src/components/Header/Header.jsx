@@ -1,37 +1,168 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
-import { UnorderedListOutlined, UserOutlined } from "@ant-design/icons";
 import NavbarCategoryComponent from "../NavbarCategoryComponent/NavbarCategoryComponent.jsx";
 import Sort from "../Sort/Sort.jsx";
-import { Button, Drawer, Popover, Space } from "antd";
+import { Button, Drawer, Dropdown, Popover, Space } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import * as CategoryService from "../../services/CategoryService";
+import { useQuery } from "@tanstack/react-query";
+import { slug } from "../../utils.js";
+import {
+  WrappeContentPopup,
+  WrapperHeaderAccount,
+  WrapperHeaderCategory,
+  WrapperHeaderPost,
+  WrapperHeaderSearch,
+  WrapperHeaderSort,
+} from "../HeaderComponent/style.js";
+import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch.jsx";
+import Loading from "../LoadingComponent/Loading.jsx";
+import * as UserService from "../../services/UserService";
+
+//icon
+import {
+  UserOutlined,
+  HeartFilled,
+  MenuOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
+import { RiUserSettingsLine } from "react-icons/ri";
+import { MdLogout } from "react-icons/md";
+import { resetUser } from "../../redux/slides/userSlide.js";
 
 const Header = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  
-  //drawer
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [userName, setUserName] = useState("");
+
   const [open, setOpen] = useState(false);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
+  const hide = () => {
     setOpen(false);
+  };
+  const handleOpenChange = (newOpen) => {
+    setOpen(newOpen);
+  };
+  const handleStoryManager = async () => {
+    navigate("/quan-ly-truyen");
+  };
+
+  useEffect(() => {
+    setLoading(true)
+    setUserName(user?.name)
+    setLoading(false)
+}, [user?.name, user?.avatar])
+
+  //drawer
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const showDrawer = () => {
+    setOpenDrawer(true);
+  };
+  const onCloseDrawer = () => {
+    setOpenDrawer(false);
   };
 
   //dang truyen
   const handlePost = () => {
     if (user?.access_token) {
-        navigate('/dang-truyen');
+      navigate("/dang-truyen");
     } else {
-        navigate('/dang-nhap');
+      navigate("/dang-nhap");
     }
-}
+  };
+
+  //call api từ bảng category
+  const fetchCategory = async () => {
+    const res = await CategoryService.getAllCategory();
+    return res;
+  };
+  const { isPending, data: categories } = useQuery({
+    queryKey: ["category"],
+    queryFn: fetchCategory,
+  });
+
+  //category
+  const renderMenuItems = () => {
+    if (isPending || !categories) return [];
+
+    return categories?.data.map((category) => ({
+      key: category._id,
+      label: (
+        <div
+          key={category._id}
+          onClick={() =>
+            navigate(`/the-loai/${slug(category.name)}`, {
+              state: category.name,
+            })
+          }
+        >
+          <a style={{ color: "#0E3746" }} href={slug(category.name)}>
+            {category.name}
+          </a>
+        </div>
+      ),
+    }));
+  };
+
+  //sort
+  const items = [
+    {
+      key: "1",
+      label: <a href="/sap-xep/luot-doc">Lượt đọc</a>,
+    },
+    {
+      key: "2",
+      label: <a href="/sap-xep/hoan-thanh">Hoàn thành</a>,
+    },
+  ];
+
+  //logout
+  const handleLogout = async () => {
+    localStorage.clear();
+    setLoading(true);
+    await UserService.logoutUser();
+    dispatch(resetUser());
+    navigate("/");
+    setLoading(false);
+  };
+
+  const content = (
+    <div onClick={hide}>
+      <WrappeContentPopup
+        className="ContentPopup"
+        onClick={() => navigate("/trang-ca-nhan")}
+      >
+        <HeartFilled /> Trang cá nhân{" "}
+      </WrappeContentPopup>
+      <WrappeContentPopup className="ContentPopup" onClick={handleStoryManager}>
+        <MenuOutlined /> Quản lý truyện{" "}
+      </WrappeContentPopup>
+      {user?.isAdmin && (
+        <WrappeContentPopup
+          className="ContentPopup"
+          onClick={() => navigate("/system/admin")}
+        >
+          <RiUserSettingsLine /> Quản lý hệ thống{" "}
+        </WrappeContentPopup>
+      )}
+      <WrappeContentPopup className="ContentPopup" onClick={handleLogout}>
+        <MdLogout /> Đăng xuất{" "}
+      </WrappeContentPopup>
+    </div>
+  );
+
+  //login
+  const handleNavigateLogin = () => {
+    navigate("/dang-nhap");
+  };
+
 
   return (
     <div className="header">
-      <div className="list-header" onClick={showDrawer}>
+      <div className="list-mobile" onClick={showDrawer}>
         <UnorderedListOutlined />
       </div>
 
@@ -40,44 +171,71 @@ const Header = () => {
       </div>
 
       <ul className="header-menu">
-        <li>Thể loại</li>
-        <li>Sắp xếp</li>
-        <li className="post-story" onClick={handlePost}>Đăng truyện</li>
         <li>
-          <input type="text" placeholder="Tên truyện, tên tác giả..." />
+          <Dropdown menu={{ items: renderMenuItems() }} placement="bottomLeft">
+            <WrapperHeaderCategory>Thể loại</WrapperHeaderCategory>
+          </Dropdown>
+        </li>
+        <li>
+          <Dropdown menu={{ items }} placement="bottomLeft">
+            <WrapperHeaderSort>Sắp xếp</WrapperHeaderSort>
+          </Dropdown>
+        </li>
+        <li className="post-story">
+          <WrapperHeaderPost onClick={handlePost}>
+            {" "}
+            Đăng truyện{" "}
+          </WrapperHeaderPost>
+        </li>
+        <li>
+          <WrapperHeaderSearch>
+            <ButtonInputSearch placeholder="Tìm truyện, tác giả..." />
+          </WrapperHeaderSearch>
         </li>
       </ul>
 
       <div className="header-login">
         {user?.access_token ? (
-          null
-          // <Popover
-          //   content={content}
-          //   trigger="click"
-          //   open={open}
-          //   onOpenChange={handleOpenChange}
-          // >
-          //   <div className="popover-trigger" style={{ cursor: "pointer" }}>
-          //     {userName || user.email}
-          //   </div>
-          // </Popover>
-        ) : (
-          <div>
-            <div onClick={() => navigate("/dang-nhap")}>
-              <UserOutlined />
-            </div>
-          </div>
-        )}
+          <Loading isLoading={loading}>
+            <WrapperHeaderAccount>
+              <UserOutlined style={{ fontSize: "20px" }} />
+              {user?.access_token ? (
+                <Popover
+                  content={content}
+                  trigger="click"
+                  open={open}
+                  onOpenChange={handleOpenChange}
+                >
+                  <div
+                    className="popover-trigger"
+                    style={{ cursor: "pointer" }}
+                  >
+                    {userName || user.email}
+                  </div>
+                </Popover>
+              ) : (
+                <div>
+                  <div
+                    onClick={handleNavigateLogin}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <span>Đăng nhập / Đăng ký</span>
+                  </div>
+                </div>
+              )}
+            </WrapperHeaderAccount>
+          </Loading>
+        ) : null}
       </div>
 
       <Drawer
         title=" "
         closable={false}
-        onClose={onClose}
-        open={open}
+        onClose={onCloseDrawer}
+        open={openDrawer}
         extra={
           <Space>
-            <Button onClick={onClose}>Đóng</Button>
+            <Button onClick={onCloseDrawer}>Đóng</Button>
           </Space>
         }
       >

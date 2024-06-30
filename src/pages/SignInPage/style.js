@@ -31,4 +31,5 @@ export const WrapperContainer = styled.div`
         width:50%;
 
     }
+
 `;

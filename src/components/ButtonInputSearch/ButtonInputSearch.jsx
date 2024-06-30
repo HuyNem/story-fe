@@ -34,9 +34,9 @@ function ButtonInputSearch(props) {
     };
 
     return (
-        <div style={{ display: 'flex', margin: '5px' }}>
-            <Input value={search} onChange={handleChange} onKeyDown={handleEnterSearch} placeholder={placeholder} size="middle" style={{ borderRadius: "0px", }} />
-            <Button onClick={handleSearch} type="link" size="middle" icon={<SearchOutlined />} style={{ backgroundColor: '#fff', borderRadius: '0px', color: '#0E3746', padding: "0px 5px" }}></Button>
+        <div style={{ display: 'flex', margin: '5px', alignItems: 'center' }}>
+            <Input value={search} onChange={handleChange} onKeyDown={handleEnterSearch} placeholder={placeholder} size="middle" style={{ borderRadius: "0px"}} />
+            {/* <Button onClick={handleSearch} type="link" size="middle" icon={<SearchOutlined />} style={{ backgroundColor: '#fff', borderRadius: '0px', color: '#0E3746', padding: "0px 5px" }}></Button> */}
         </div>
     );
 }

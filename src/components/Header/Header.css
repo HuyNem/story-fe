@@ -5,7 +5,7 @@
     padding: 0px 205px;
     background-color: #0E3746;
     color: #fff;
-    height: 55px;
+    height: 50px;
 }
 
 .header-menu {
@@ -17,17 +17,6 @@
 
 .header-menu input {
     padding: 5px;
-}
-
-.header-menu li:nth-child(3) {
-    position: relative;
-    padding: 18px;
-    background-color: rgb(226, 42, 42);
-    cursor: pointer;
-}
-
-.header-menu li:nth-child(3):hover {
-    background-color: rgb(226, 78, 78);
 }
 
 .header-logo p {
@@ -42,7 +31,7 @@
     cursor: pointer;
 }
 
-.list-header {
+.list-mobile {
     display: none;
 }
 
@@ -53,20 +42,47 @@
 
 @media(max-width: 1280px) {
     .header {
-        padding: 0px 20px;
+        padding: 0px 70px;
     }
 }
 
 @media(max-width: 1024px) {
     .header {
-        padding: 0px 10px;
+        padding: 0px 40px;
     }
 }
 
+@media(max-width: 800px) {
+    .header {
+        padding: 0px 10px;
+    }
+    .post-story {
+        display: none;
+    }
+    .header-logo {
+        text-align: center;
+    }
+}
+
+@media(max-width: 600px) {
+    .header {
+        padding: 0px 10px;
+    }
+    
+    .list-mobile {
+        display: block;
+    }
+
+    .header-logo {
+        margin-left: 175px;
+    }
+}
+
+
 @media(max-width: 500px) {
 
-    .header {
-
+    .list-mobile {
+        display: flex;
     }
     .header-menu {
         display: none;
@@ -91,5 +107,12 @@
     }
     .ant-drawer .ant-drawer-header {
         padding: 5px;
+    }
+}
+
+@media(max-width: 480px) {
+
+    .header-logo {
+        margin-left: 0px;
     }
 }

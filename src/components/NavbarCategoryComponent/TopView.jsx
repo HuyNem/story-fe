@@ -5,6 +5,8 @@ import * as StoryService from '../../services/StoryService';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { slug } from '../../utils';
+import SkeletonTopViews from '../Skeleton/SkeletonTopViews';
+import { isPending } from '@reduxjs/toolkit';
 
 function TopView() {
     const navigate = useNavigate();
@@ -14,13 +16,14 @@ function TopView() {
         const res = await StoryService.getTopView();
         return res;
     }
-    const { data: stories } = useQuery({ queryKey: ['stories'], queryFn: fetchTopViewApi, retry: 3, retryDelay: 1000 });
+    const { isPending, data: stories } = useQuery({ queryKey: ['stories'], queryFn: fetchTopViewApi, retry: 3, retryDelay: 1000 });
 
 
     return (
         <NavCategory style={{ marginTop: 15 }}>
             <WrapperLabel>Top Truyện Hay</WrapperLabel>
             <hr />
+            <SkeletonTopViews loading={isPending} />
             <WrapperContent>
                 {stories && stories?.data.map((story) => {
                     const currentTop = top++;

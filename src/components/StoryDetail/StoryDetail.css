@@ -12,7 +12,7 @@
     font-weight: 600;
 }
 
-.story-detail-right h5 {
+.story-detail-right h4 {
     font-size: 14px;
     font-weight: 500;
 }
@@ -21,14 +21,31 @@
     font-size: 14px;
 }
 
-@media(max-width:500px) {
+@media (min-width: 768px) {
+    .story-detail-right table tr td {
+        padding: 0;
+    }
+    .story-detail-right h3,
+    .story-detail-right h4,
+    .story-detail-right p
+    {
+        margin: 0px;
+    }
+}
+
+@media(max-width: 480px) {
     .detail-top {
         display: flex;
         flex-direction: column;
         gap: 10px;
     }
+    .story-detail-left {
+        display: flex;
+        justify-content: center;
+
+    }
     .story-detail-left img {
-        width: 100%;
+        width: 70%;
     }
     .story-detail-right h3 {
         font-size: 14px;
@@ -49,5 +66,11 @@
     table tr td:first-child {
         width: 75px;
         height: 20px;
+    }
+}
+
+@media(max-width: 360px) {
+    .story-detail-left img {
+        width: 100%;
     }
 }
