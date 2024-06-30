@@ -51,10 +51,10 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setLoading(true)
-    setUserName(user?.name)
-    setLoading(false)
-}, [user?.name, user?.avatar])
+    setLoading(true);
+    setUserName(user?.name);
+    setLoading(false);
+  }, [user?.name, user?.avatar]);
 
   //drawer
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -159,7 +159,6 @@ const Header = () => {
     navigate("/dang-nhap");
   };
 
-
   return (
     <div className="header">
       <div className="list-mobile" onClick={showDrawer}>
@@ -195,37 +194,32 @@ const Header = () => {
       </ul>
 
       <div className="header-login">
-        {user?.access_token ? (
-          <Loading isLoading={loading}>
-            <WrapperHeaderAccount>
-              <UserOutlined style={{ fontSize: "20px" }} />
-              {user?.access_token ? (
-                <Popover
-                  content={content}
-                  trigger="click"
-                  open={open}
-                  onOpenChange={handleOpenChange}
-                >
-                  <div
-                    className="popover-trigger"
-                    style={{ cursor: "pointer" }}
-                  >
-                    {userName || user.email}
-                  </div>
-                </Popover>
-              ) : (
-                <div>
-                  <div
-                    onClick={handleNavigateLogin}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <span>Đăng nhập / Đăng ký</span>
-                  </div>
+        <Loading isLoading={loading}>
+          <WrapperHeaderAccount>
+            {user?.access_token ? (
+              <Popover
+                content={content}
+                trigger="click"
+                open={open}
+                onOpenChange={handleOpenChange}
+              >
+                <div className="popover-trigger" style={{ cursor: "pointer" }}>
+                  {userName || user.email}
                 </div>
-              )}
-            </WrapperHeaderAccount>
-          </Loading>
-        ) : null}
+              </Popover>
+            ) : (
+              <div>
+                <div
+                  onClick={handleNavigateLogin}
+                  style={{ cursor: "pointer", display: "flex", gap: 10 }}
+                >
+                  <UserOutlined style={{ fontSize: "20px" }} />
+                  <p className="login">Đăng nhập / Đăng ký</p>
+                </div>
+              </div>
+            )}
+          </WrapperHeaderAccount>
+        </Loading>
       </div>
 
       <Drawer

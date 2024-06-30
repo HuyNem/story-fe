@@ -44,6 +44,9 @@
     .header {
         padding: 0px 70px;
     }
+    .header-login .login {
+        display: none;
+    }
 }
 
 @media(max-width: 1024px) {
