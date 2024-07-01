@@ -67,7 +67,7 @@
     }
 }
 
-@media(max-width: 600px) {
+/* @media(max-width: 600px) {
     .header {
         padding: 0px 10px;
     }
@@ -79,10 +79,14 @@
     .header-logo {
         margin-left: 175px;
     }
-}
+} */
 
 
-@media(max-width: 500px) {
+@media(max-width: 600px) {
+    .header {
+        display: flex;
+        justify-content: space-between;
+    }
 
     .list-mobile {
         display: flex;

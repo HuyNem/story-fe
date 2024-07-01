@@ -233,6 +233,7 @@ const Header = () => {
           </Space>
         }
       >
+        <ButtonInputSearch placeholder="Tìm truyện, tác giả..." closeDrawer={onCloseDrawer}/>
         <NavbarCategoryComponent />
         <Sort />
       </Drawer>

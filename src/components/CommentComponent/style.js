@@ -11,21 +11,28 @@ export const Wrapper = styled.div`
   }
 
   .input-cmt {
-    position: relative;
-    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
   }
 
-  .input-cmt button {
+  .input-cmt .text-area {
+    width: 96%;
+  }
+
+  .input-cmt .btn-send {
+    margin-top: auto;
+    align-self: flex-end;
+  }
+
+  .input-cmt .btn-send button {
+    margin-right: 14px;
     background-color: #277cb4;
     border: none;
     border-radius: 2px;
     color: #fff;
-    width: 70px;
     padding: 5px 10px;
-
-    position: absolute;
-    right: 0;
-    margin: 20px 10px;
   }
 
   .input-cmt button:hover {
@@ -40,20 +47,14 @@ export const Wrapper = styled.div`
     margin: 10px 20px;
   }
 
-
-
   @media (max-width: 800px) {
     .h3-comment {
       font-size: 16px;
     }
-
   }
 
-    @media screen and (max-width: 6000px) {
+  @media screen and (max-width: 600px) {
     .text-area {
-      width: 94%;
-      margin: 0px 10px;
     }
   }
-
 `;

@@ -5,17 +5,29 @@ export const Wrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     height: fit-content;
+    padding: 0px 205px;
+
+    @media (max-width: 1280px) {
+        padding: 0px 70px;
+    }
+
+    @media (max-width: 1024px) {
+        padding: 0px 40px;
+    }
+
+    @media (max-width: 800px) {
+        padding: 0px 10px;
+    }
 `;
 
 export const WrapperContent = styled.div`
-    padding: 5px 200px;
     display: flex;
-    width: 70%;
+    width: 100%;
     height: fit-content;
 `;
 
 export const WrapperLeft = styled.div`
-    width: 600px;
+    flex: 1;
 `;
 
 export const WrapperStory = styled.div`
@@ -31,6 +43,10 @@ export const WrapperRight = styled.div`
     a {
         font-size: 14px;
         text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+        display: none;
     }
 `;
 

@@ -82,6 +82,7 @@ export const WrapperStoryByCategory = styled.div`
     max-width: 100;
     height: fit-content;
     margin-bottom: 10px;
+    min-height: 100vh;
 
     h3 {
       color: #0E3746;
@@ -176,7 +177,6 @@ export const WrapperStoryCompleted = styled.div`
     background-color: #F4F2EC;
     max-width: 650px;
     height: fit-content;
-    margin-top: 10px;
 
     h3 {
       color: #0E3746;
