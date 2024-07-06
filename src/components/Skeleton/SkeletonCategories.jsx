@@ -9,9 +9,9 @@ const SkeletonCategories = (props) => {
     <div className="skeleton-new-stories">
       {loading ? (
         <>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
+          <Skeleton active/>
+          <Skeleton active/>
+          <Skeleton active/>
         </>
       ) : null}
     </div>

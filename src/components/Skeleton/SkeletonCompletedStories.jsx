@@ -8,9 +8,9 @@ const SkeletonCompletedStories = (props) => {
     <div className="skeleton-completed-stories">
       {loading ? (
         <>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
+          <Skeleton active/>
+          <Skeleton active/>
+          <Skeleton active/>
         </>
       ) : null}
     </div>
